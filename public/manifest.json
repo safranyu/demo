@@ -1,0 +1,25 @@
+{
+  "name": "百万社群",
+  "short_name": "百万社群",
+  "icons": {
+    "home": {
+      "name": "首页",
+      "normal": "./img/icons/homeno.png",
+      "active": "./img/icons/home.png"
+    },
+    "crowd": {
+      "name":"众筹",
+      "normal": "./img/icons/crowdno.png",
+      "active": "./img/icons/crowd.png"
+    },
+    "my": {
+      "name":"我的",
+      "normal": "./img/icons/myno.png",
+      "active": "./img/icons/my.png"
+    }
+  },
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#D5D7E3",
+  "theme_color": "#4DBA87"
+}

@@ -1,0 +1,211 @@
+.my-content{
+  width: 100%;
+  height: auto;
+  position: relative;
+  #card{
+    height: 226px;
+    // width: 100%;
+    display: flex;
+    padding-top: 76px;
+    padding-left: 54px;
+    .card-head{
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .card-con{
+      color: #fefefe;
+      margin-left: 44px;
+      .card-name{
+        font-size: 37px;
+        line-height: 60px;
+      }
+      .card-id{
+        font-size: 29px;
+        line-height: 60px;
+      }
+      #to-login{
+        font-size: .35rem;
+        background-color: #c9a907;
+        color: white;
+        width: 252px;
+        height: 70px;
+        display: flex;
+        margin-top: 50px;
+        margin-left: 20px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 35px;
+      }
+      .card-rank{
+        font-size: 14Px;
+        span{
+          font-size: 12Px;
+        }
+      }
+    }
+  }
+  #myOrder{
+    width: 100%;
+    height: 200px;
+    background-color: #e6e8f5;
+    padding-top: 20px;
+    padding-left: 46px;
+    padding-right: 50px;
+    box-sizing: border-box;
+    .myOrder-head{
+      justify-content: space-between;
+      .myOrder-head-title{
+        font-size: 30px;
+        color: #5a5a5a;
+      }
+      .myOrder-head-all{
+        font-size: 24px;
+        color: #2d2d2d;
+      }
+    }
+    .myOrderBox{
+      justify-content: space-around;
+      padding-top: 23px;
+      li{
+        width: 80px;
+        height: auto;
+        position: relative;
+        font-size: 18Px;
+        a{
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+          img{
+            display: block;
+            width: 51px;
+            height: 50px;
+            margin: 0 auto;
+          }
+          span{
+            color: #5a5a5a;
+            font-size: 12Px;
+          }
+        }
+        .floatNumber{
+          position: absolute;
+          top: -12px;
+          right: 6px;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          border: 1px solid #bd0000;
+          background-color: #e6e8f5;
+          font-size: 12Px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span{
+            color: #bd0000;
+            font-size: 12Px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+  #type{
+    width: 100%;
+    height: auto;
+    padding-top: 38px;
+    ul{
+      li{
+        width: 100%;
+        background-color: #e6e8f5;
+        margin-bottom: 36px;
+        position: relative;
+        a{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-left: 45px;
+          padding-right: 38px;
+          height: 100px;
+          position: relative;
+          color: #333;
+          .type-box{
+            img{
+              display: inline-block;
+              width: 76px;
+              height: 76px;
+              vertical-align: middle;
+            }
+            span{
+              font-size: 16Px;
+              color: #2d2d2d;
+              vertical-align: middle;
+              padding-left: 24px;
+            }
+          }
+
+          .money{
+            font-size: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+          }
+          .mui-icon{
+            vertical-align: middle;
+          }
+          .type-box3{
+            img{
+              display: inline-block;
+              width: 76px;
+              height: 76px;
+              vertical-align: middle;
+            }
+          }
+          .type-box3 span {
+            font-size: 16Px;
+            color: #2d2d2d;
+            vertical-align: middle;
+            padding-left: 18px;
+          }
+          .type-box2{
+            img{
+              display: inline-block;
+              width: 76px;
+              height: 76px;
+              vertical-align: middle;
+            }
+            span{
+              font-size: 16Px;
+              color: #2d2d2d;
+              vertical-align: middle;
+              padding-left: 18px;
+            }
+          }
+          &.myCard{
+            background-color: #e6e8f5;
+            img{
+              width: 76px;
+              height: 76px;
+              margin-left: 0;
+              margin-right: 0;
+            }
+          }
+          & + a:after {
+            position: absolute;
+            right: 45px;
+            top: 0;
+            left: 45px;
+            height: 1px;
+            content: '';
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            background-color: #c8c7cc;
+          }
+        }
+      }
+    }
+  }
+}
