@@ -11,5 +11,7 @@ export default {
   // 获取用户登录信息
   getUserInfo: baseUrl + '/BwwdMoblie.php/Recognize/myRecognize.html',
   // 用户登录
-  getUserLogin: baseUrl + '/BwwdMoblie.php/index/login.html'
+  getUserLogin: baseUrl + '/BwwdMoblie.php/index/login.html',
+  //注册图形验证码
+  getSigninImg: baseUrl + '/BwwdMoblie.php/index/getVerifyInfoNew.html'
 }

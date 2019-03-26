@@ -210,7 +210,7 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.token !== 'null') {
+    if (this.$store.state.token !== null) {
       console.log('lll=',this.$store.state.token)
       this.token = this.$store.state.token
       this.getMyInfo()

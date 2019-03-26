@@ -22,5 +22,8 @@ export default {
   },
   getUserInfo(params, header, data) {
     return api.post(urls.getUserInfo, params, header, data)
+  },
+  getSigninImg(header){
+    return api.get(urls.getSigninImg, header)
   }
 }
