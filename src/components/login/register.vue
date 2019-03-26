@@ -109,7 +109,6 @@ export default {
       } catch(err) {
         Toast(err)
       }
-
     }
   },
   mounted(){
@@ -150,8 +149,8 @@ export default {
     .pwdInput,
     .phInput {
       width: 100%;
-      height: 0.76rem;
-      margin-top: .5rem;
+      height: 76px;
+      margin-top: 40px;
       position: relative;
       .pwdInputBox,
       .phInputBox {

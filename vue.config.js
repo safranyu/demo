@@ -6,7 +6,7 @@ module.exports = {
    */
   // 基本路径
   // publicPath: '/',
-  publicPath: process.env.NODE_ENV === 'production'? '/cli3-demo/': '/',
+  publicPath: process.env.NODE_ENV === 'production'? 'http://api.vmccc.cn/': '/',
   // 输出文件目录
   outputDir: 'dist',
   // eslint-loader 是否在保存的时候检查
@@ -36,17 +36,19 @@ module.exports = {
     sourceMap: false,
     // css预设器配置项
     loaderOptions: {
-      postcss: {
-        plugins: [
-          require('postcss-pxtorem')({
-            rootValue: 75.0, // 换算的基数
-            unitPrecision: 3, // 最小精度，小数点位数
-            // selectorBlackList: ['vant-icon'], // 忽略转换正则匹配项
-            propList: ['*'], // ['!font*'] !不匹配属性（这里是字体相关属性不转换）
-            minPixelValue: 2 // 替换的最小像素值
-          })
-        ]
-      }
+      //分离到postcss.config.js
+      // postcss: {
+      //   plugins: [
+      //     require('postcss-pxtorem')({
+      //       rootValue: 75.0, // 换算的基数
+      //       unitPrecision: 3, // 最小精度，小数点位数
+      //       selectorBlackList: ['vant-icon'], // 忽略转换正则匹配项 过滤的类名
+      //       replace: true, //默认直接替换属性
+      //       propList: ['*','!border*'], // ['!font*'] !不匹配属性（这里是字体相关属性不转换）
+      //       minPixelValue: 6 // 替换的最小像素值
+      //     })
+      //   ]
+      // }
     },
     // 启用 CSS modules for all css / pre-processor files.
     modules: false

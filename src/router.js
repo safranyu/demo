@@ -42,7 +42,7 @@ export default new Router({
       name: 'goodsinfo',
       meta: {
         title: '文章详情',
-        requireAuth:true // 当前路由需要校验，不需要就不用写
+        requireAuth: false // 当前路由需要校验，不需要就不用写
       },
       component: () => import("./components/details/details.vue")
     },

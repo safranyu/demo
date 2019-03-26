@@ -32,7 +32,7 @@ service.interceptors.request.use(
 )
 ```
 
-#### localStorage 存储的问题待解决
+### localStorage 存储的问题待解决
 解决了存储的问题,创建store文件夹对store进行封装，为了解决刷新页面获取localStoreage数据，就直接在这里添加，用了模板字符串转换数据方便其他页面调用
 
 ```javascript
@@ -44,6 +44,69 @@ const state = {
 }
 ```
 ### 当在页跳转到另外页面底部的状态为改变
+
+
+### 在750px设计稿下，对使用vant组件导致过小解决方法
+
+方法一：直接在`postcss.config.js`加上判断
+
+```
+const AutoPrefixer = require("autoprefixer");
+const pxtorrem = require("postcss-pxtorem");
+
+module.exports = ({ file }) => { 
+  let rootValue; // 判断条件 请自行调整 我使用的是 mand-mobile ui 没有对vant引入进行测试
+  if (file && file.dirname && file.dirname.indexOf('vant') > -1) {
+    rootValue = 37.5;
+  } else {
+    rootValue = 75;
+  }
+  return {
+    plugins: [
+      pxtorrem({
+        rootValue: rootValue, // 换算的基数
+        unitPrecision: 3, // 最小精度，小数点位数
+        selectorBlackList: ['vant-icon'], // 忽略转换正则匹配项 过滤的类名
+        replace: true, //默认直接替换属性
+        propList: ['*','!border*'], // ['!font*'] !不匹配属性（这里是字体相关属性不转换）
+        minPixelValue: 2 // 替换的最小像素值
+       }),
+      AutoPrefixer({ browsers: ["last 20 versions", "android >= 4.0"] }) 
+    ]
+  };
+}
+```
+方法二：采用postcss-px-to-viewport 转换vw单位
+```
+// postcss.config.js
+const join = require('path').join
+const tailwindJS = join(__dirname, 'tailwind.js')
+module.exports = ({ file }) => {
+  let vant // 判断条件 请自行调整 
+  if (file && file.dirname && file.dirname.indexOf('vant') > -1) {
+    vant = 375
+  } else {
+    vant = 750
+  }
+  return {
+    plugins: [
+      require('tailwindcss')(tailwindJS),
+      require('postcss-px-to-viewport')({
+        viewportWidth: vant,
+        unitPrecision: 3,
+        viewportUnit: 'vw',
+        selectorBlackList: [''],
+        minPixelValue: 1,
+        mediaQuery: false
+      })
+    ]
+  }
+}
+```
+
+### 业务封装popup组件
+
+代码前往>components>crowd>popup.vue
 
 ## Project setup
 ```

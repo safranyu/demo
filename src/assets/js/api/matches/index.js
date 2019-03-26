@@ -4,9 +4,9 @@ import urls from './urls'
 const header = {}
 // const data = {}
 export default {
-  matches(params) {
+  matches(params, header, data) {
     // return出去了一个promise
-    return api.get(urls.matches, params, header)
+    return api.post(urls.matches, params, header, data)
   },
   goodsDetails(params) {
     return api.get(urls.goodsDetails, params, header)

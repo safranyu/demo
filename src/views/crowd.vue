@@ -1,5 +1,5 @@
 <template>
-  <van-tabs v-model="active" @click="getActiveList" swipeable>
+  <van-tabs v-model="active" @click="getActiveList" swipeable @change="getActiveList">
     <van-tab v-for="(val, index) in tabTitle" :key="index">
       <div slot="title" class="van-crowd">
         <div :class="val.kind">
@@ -58,12 +58,33 @@
               >{{ active == 0 ? '未开始': active == 1 ? '立即购买': '已结束'}}</div>
             </div>
           </div>
-          <div v-if="item == null">
-            敬请期待
-          </div>
         </router-link>
       </div>
     </van-tab>
+    <popup v-if="isShow" :costs="formID" @shut="shutPopup">
+      <div slot="header" class="buyFormTitle">{{formID.title}}</div>
+      <div slot="main" class="buyForm">
+        <section class="control">
+          <label for>数 量：</label>
+          <button :class="[ nums == 1 ? colorGray: '', minus ]" @click="reduce">-</button>
+          <input type="number" value="1" size="1" v-model="nums">
+          <button :class="[ nums == formID.limit_periods ? colorGray: '', add]" @click="addNum">+</button>
+        </section>
+        <section>
+          <label for>单 价：</label>
+          <span>{{ formID.price }}</span>
+        </section>
+        <section>
+          <label for>产品金额合计：</label>
+          <span>{{ formID.price * nums | numFilter}}</span>
+        </section>
+        <section>
+          <label for>众筹金额合计：</label>
+          <span>{{ formID.share_price * nums | numFilter}}</span>
+        </section>
+        <button id="submit" @click="submitCart(formID.goods_id,nums,formID.periods)">提交订单</button>
+      </div>
+    </popup>
   </van-tabs>
 </template>
 
@@ -71,10 +92,12 @@
 import axios from 'axios'
 import { deflate } from 'zlib'
 import CountDown from '@/components/time/countDown.vue'
+import Popup from "@/components/crowd/popup.vue";
 import { Toast } from 'vant'
 export default {
   components: {
-    CountDown
+    CountDown,
+    Popup
   },
   data() {
     return {
@@ -83,6 +106,12 @@ export default {
       underway: null,
       finish: null,
       preheat: null,
+      isShow: false,
+      formID: {},
+      nums: 1,
+      colorGray: 'colorGray',
+      add: 'add',
+      minus: 'minus', 
       tabTitle: [
         {
           path: "/mycrowd/preheat",
@@ -127,27 +156,34 @@ export default {
     },
     getPercent(val) {
       return parseInt(val.slice(0, val.length - 1));
-    } 
+    },
+    numFilter(value) {
+      return parseFloat(value).toFixed(2)
+    }
   },
   methods: {
     async matches(type, page) {
       console.log('请求=',type,page)
       try {
-        let params = {
+        let data = {
           type: type,
           page: page
         }
-        let res = await this.$api.matches.matches(params)
+        let params = {}
+        let header = {}
+        let res = await this.$api.matches.matches(params, header, data)
         console.log('res=',res)
         if (res.code === 100) {
           Toast({
             type:'fail',
-            message: res.msg
+            message: res.msg,
+            duration: 1000
           });
           // this.$router.push({path:'/login'})
         } else if (res.code === 50) {
           Toast({
-            message: res.msg
+            message: res.msg,
+            duration: 1000
           });
         }       
         switch(type) {
@@ -173,22 +209,24 @@ export default {
     async getPopup(id, periods) {
       console.log(id,periods)
       try {
-        let params = {
+        let params = {}
+        let data = {
           goods_id: id,
           periods: periods
         }
-        let data = {
-          // emulateJSON: true
-        }
         let res = await this.$api.matches.getGoodsBuy(params, data)
         console.log('resaaa=',res)
+        if (res.code === 200) {
+          this.isShow = true;
+          this.formID = res.data
+        }
       } catch(e) {
         console.log(e)
       }
     },
     getActiveList(index) {
       // this.asyncData(index,this.type)
-      console.log("111=", index,this.underway);
+      console.log("111=", index);
       this.matches(index + 1, 1)
     },
     getGoodsDetails(id) {
@@ -196,7 +234,25 @@ export default {
     },
     getFun(type){
       return type == 1 ? this.underway : type == 2 ?  this.finish : this.preheat
-    }
+    },
+    shutPopup: function() {
+      this.isShow = !this.isShow;
+    },
+    addNum: function() {
+      let formNum = parseInt(this.formID.limit_periods)
+      if (this.nums < formNum+1 && this.nums !== formNum) {
+        this.nums++
+      } else {
+        this.nums = formNum
+      }
+    },
+    reduce() {
+      if (this.nums > 1) {
+        this.nums--
+      } else {
+        this.nums = 1
+      }
+    },
   },
   mounted(){
     this.matches(2, 1); // 进入页面默认执行传参
@@ -205,6 +261,74 @@ export default {
 </script>
 
 <style lang="less">
+.buyFormTitle {
+  font-size: 18Px;
+  width: 428px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  // line-height: 18px;
+  padding-left: 16px;
+  margin-bottom: 36px;
+}
+.buyForm {
+  margin-bottom: 0.2rem;
+  section:nth-child(1) {
+    display: flex;
+    align-items: center;
+    button {
+      display: inline-block;
+      width: 0.49rem;
+      height: 0.49rem;
+      padding: 0;
+      background-color: #dfe2ec;
+      border-radius: 0;
+      border: 0px;
+    }
+    input[type="number"] {
+      width: 0.82rem;
+      height: 0.49rem;
+      text-align: center;
+      margin: 0 0.06rem;
+      border: 1px solid #dfe2ec;
+      background: #f2f4ff;
+      padding: 0;
+    }
+    .minus {
+      margin-left: 0.1rem;
+    }
+  }
+  section {
+    margin-bottom: 30px;
+    label {
+      display: inline-block;
+      width: 200px;
+      font-size: 0.25rem;
+      text-align: center;
+    }
+    span {
+      color: #3a3a3a;
+      font-weight: 600;
+      font-size: 0.25rem;
+    }
+  }
+  #submit {
+    width: 100%;
+    background-color: #e8c500;
+    color: white;
+    font-size: 0.4rem;
+    height: 0.8rem;
+    line-height: initial;
+    letter-spacing: 0.2em;
+    border: 1px solid #e8c500;
+  }
+  .colorGray{
+    color: gray;
+  }
+}
+.van-tab span{
+  line-height: initial;
+}
 .van-tabs--line {
   padding-top: 146px;
   .van-tabs__line {
