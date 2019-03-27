@@ -108,8 +108,6 @@ module.exports = ({ file }) => {
 
 代码前往>components>crowd>popup.vue
 
-### vue 处理二进制流图片
-http://www.qingpingshan.com/m/view.php?aid=59766
 ## Project setup
 ```
 npm install

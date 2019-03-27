@@ -1,94 +1,167 @@
 <template>
-  <div>
-    <van-cell-group>
-      <van-cell title="国家地区" is-link :value="defaultArer.name+defaultArer.arer" @click="optionArea"  />
-      <van-field
-        v-model="phone"
-        label="手机号"
-        placeholder="请输入手机号"
-      ></van-field>
-      <van-field
-        v-model="sms"
-        center
-        clearable
-        label="短信验证码"
-        placeholder="请输入短信验证码"
-      >
-        <van-button slot="button" size="small" type="primary">发送验证码</van-button>
-      </van-field>
-       <van-field
-        v-model="sms"
-        center
-        clearable
-        placeholder="请输入短信验证码"
-      >
-        <van-button slot="button" size="small" type="primary">发送验证码</van-button>
-      </van-field>
+  <van-cell-group>
+    <van-cell 
+      title="国家地区" 
+      is-link 
+      :value="defaultArer.chinese_name+'+'+defaultArer.tel_code" 
+      @click="optionArea" 
+      value-class="bcolor"/>
+    <van-field
+      v-model="phone"
+      label="手机号"
+      maxlength="11"
+      placeholder="请输入手机号"
+      :error-message="tip"
+    ></van-field>
+    <van-field
+      v-model="sms"
+      center
+      label="短信验证码"
+      maxlength="6"
+      placeholder="请输入短信验证码"
+    >
+      <van-button 
+        slot="button" 
+        size="small" 
+        :disabled="disabled" 
+        type="primary" 
+        @click="sendcode"
+        ref="button"
+        :text="text"></van-button>
+    </van-field>
+    <div class="verifyImg">
+      <van-field v-model="verify" placeholder="请输入右侧验证码" maxlength="4" />
       <img :src="verifyImg" alt="">
-    </van-cell-group>
+    </div>
+    <div class="btnSig">
+      <van-button round size="normal">注册</van-button>
+    </div>
     <van-popup v-model="show" overlay-class="sigOverlay">
       <div class="sigPopup">
         <div class="sigPopupWrap">
-          <van-cell :title="item.name" :value="item.arer"  v-for="item in arerCode" :key="item.index"/>
+          <van-cell :title="item.chinese_name" :value="item.tel_code"  v-for="(item,index) in arerCode" :key="item.id" @click="selectSite(index)"/>
         </div>
       </div>
     </van-popup>
-  </div>
+  </van-cell-group>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      disabled: false,
       username: null,
-      phone: null,
+      phone: this.phone,
       password: null,
-      sms:null,
+      sms: null,
+      verify: null,
       show: false,
-      arerCode:[
-        {name : "中国", arer: "+86"},
-        {name : "新加坡", arer: "+65"},
-        {name : "马来西亚", arer: "+60"}
-      ],
-      defaultArer: {name : "中国", arer: "+86"},
-      verifyImg: null
+      arerCode:null,
+      defaultArer: {id: 7 , chinese_name : "中国", tel_code: "86"},
+      verifyImg: null,
+      tip: "",
+      time: null,
+      text: '发送验证码'
     }
   },
   methods: {
-    async getSigninImg() {
+    sendcode(){
+      var reg=11 && /^((13|14|15|17|18|19)[0-9]{1}\d{8})$/;
+      //var url="/nptOfficialWebsite/apply/sendSms?mobile="+this.ruleForm.phone;
+      if(this.phone =='' || this.phone == null){
+        return this.tip = "请输入手机号码"
+      }else if(!reg.test(this.phone)){
+        return this.tip = "手机格式不正确"
+      }else{
+        this.time=60;
+        this.disabled=true;
+        this.tip=""
+        this.timer();
+        this.setNote() 
+      }
+    },
+    timer() {
+      if (this.time > 0) {
+        this.time--;
+        this.text=this.time+"s后重新获取";
+        setTimeout(this.timer, 1000);
+      } else{
+        this.time=0;
+        this.text="获取验证码";
+        this.disabled=false;
+      }
+    },
+    async getState() {
       try {
-        let header = {'responseType': 'arraybuffer'}
-        let res = await this.$api.matches.getSigninImg(header).then(function(res){
-          return 'data:image/png;base64,' + btoa(
-            new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
-        })
-  
+        let data = {}
+        let res = await this.$api.matches.getState(data)
         console.log(res)
-        // if (res === 200) {
-          // var img = 'data:image/jpg;base64,'+ btoa(new Uint8Array(src).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-          // var img = URL.createObjectURL(blob.src)
-          // console.log(img)
-        // }
-      } catch (err){
+        if (res.code === 200) {
+          this.arerCode = res.datas
+        }
+      } catch(err) {
         console.log(err)
       }
     },
+    async setNote() {
+      let but = this.$refs.button
+      console.log('到我了',this.phone,but)
+      this.tip = this.checkPhone(this.phone)
+      console.log('888')
+      try {
+        let data = {
+          smsTplno: 'zt_zhuce',
+          phone: this.phone,
+          country_code: this.defaultArer.tel_code,
+          verify: this.verify,
+          code: Math.ceil(Math.random() * 10)
+        }
+        // let res = await this.$api.matches.setNote(data)
+        // console.log('sdasdasd',res)
+        // if (res.code === 200) {
+
+        // }
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    getSigninImg() {
+      return this.verifyImg = this.$store.state.Url+"/Login/verify.html?rand="+Math.random()
+    },
     optionArea(){
       this.show = !this.show
+    },
+    selectSite(index){
+      console.log('序列',index)
+      let arrt = this.arerCode
+      this.defaultArer =  arrt[index]
+      this.show = !this.show
+    },
+    checkPhone(phone){ 
+      if(!(/^1[345789]\d{9}$/.test(phone)) || this.phone == null){ 
+        return "手机号码有误，请重填"; 
+      } 
     }
   },
-  mounted () {
-    this.getSigninImg() //验证码图片
+  mounted() {
+    this.getSigninImg(), //验证码图片
+    this.getState()
   }
 }
 </script>
 
 <style lang="less">
+.bcolor{
+  span{
+    color: #000;
+  }
+}
 .sigOverlay{
   background-color: rgba(0,0,0,.3)
 }
 .sigPopup{
-  height: 400px;
+  height: 600px;
   position: relative;
   overflow: auto;
   .sigPopupWrap{
@@ -99,5 +172,25 @@ export default {
   background-color: #dbbb15;
   border: 1px solid #dbbb15;
 }
-
+.verifyImg{
+  display: flex;
+  padding-right: 30px;
+}
+.btnSig{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  .van-button{
+    width: 90%;
+  }
+  .van-button--default{
+    color: #fff;
+    background-color: #dbbb15;
+    border: 1px solid #dbbb15;
+  }
+  .van-button__text{
+    font-size: 18Px;
+  }
+}
 </style>

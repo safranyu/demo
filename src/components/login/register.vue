@@ -112,7 +112,7 @@ export default {
     }
   },
   mounted(){
-    if (this.$store.state.token !== 'null') {
+    if (this.$store.state.token !== "null") {
       let redirect = decodeURIComponent(this.$route.query.redirect || '/');
       this.$router.push({
         path: redirect

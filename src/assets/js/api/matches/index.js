@@ -23,7 +23,10 @@ export default {
   getUserInfo(params, header, data) {
     return api.post(urls.getUserInfo, params, header, data)
   },
-  getSigninImg(header){
-    return api.get(urls.getSigninImg, header)
+  getState(data) {
+    return api.post(urls.getState, header, data)
+  },
+  setNote(data) {
+    return api.post(urls.setNote, header, data)
   }
 }

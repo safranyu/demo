@@ -12,6 +12,8 @@ export default {
   getUserInfo: baseUrl + '/BwwdMoblie.php/Recognize/myRecognize.html',
   // 用户登录
   getUserLogin: baseUrl + '/BwwdMoblie.php/index/login.html',
-  //注册图形验证码
-  getSigninImg: baseUrl + '/BwwdMoblie.php/index/getVerifyInfoNew.html'
+  // 获取国家
+  getState: baseUrl + '/BwwdMoblie.php/index/getCountry.html',
+  // 发送短信
+  setNote: baseUrl + '/BwwdMoblie.php/Tools/send_msg.html'
 }
