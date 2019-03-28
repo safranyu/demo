@@ -326,8 +326,9 @@ export default {
     color: gray;
   }
 }
-.van-tab span{
-  line-height: initial;
+.van-tab{
+  display: initial;
+  line-height: .673rem;
 }
 .van-tabs--line {
   padding-top: 146px;
@@ -352,7 +353,7 @@ export default {
 }
 .preheat {
   width: 43px;
-  height: 49px;
+  height: 50px;
   margin: 20px auto 0 auto;
 }
 .havein {
@@ -362,7 +363,7 @@ export default {
 }
 .over {
   width: 43px;
-  height: 43px;
+  height: 50px;
   margin: 20px auto 4px auto;
 }
 .crowd-card {

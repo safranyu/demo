@@ -15,5 +15,7 @@ export default {
   // 获取国家
   getState: baseUrl + '/BwwdMoblie.php/index/getCountry.html',
   // 发送短信
-  setNote: baseUrl + '/BwwdMoblie.php/Tools/send_msg.html'
+  setNote: baseUrl + '/BwwdMoblie.php/Tools/send_msg.html',
+  //注册手机验证码验证
+  setVerify: baseUrl + '/BwwdMoblie.php/index/checkVerificationCode.html'
 }

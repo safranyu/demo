@@ -238,8 +238,5 @@ export default {
 .flex{
   display: flex;
 }
-.van-icon-arrow:before{
-  vertical-align: middle;
-}
 @import "../assets/less/my.less";
 </style>

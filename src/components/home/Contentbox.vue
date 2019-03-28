@@ -2,25 +2,25 @@
   <div class="page-nav clearfix">
     <div class="page-nav-up">
       <div class="page-nav-left">
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.js">
+        <router-link to="/medialist/9" class="nav-box" :style="bgImgs.js">
           <div>
             <img src="@/assets/images/js.png" alt class="nav-icon-js">
             <span>竞赛</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.sxy">
+        <router-link to="/medialist/1" class="nav-box" :style="bgImgs.sxy">
           <div>
             <img src="@/assets/images/sxy.png" alt class="nav-icon-sxy">
             <span>商学院</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.zsdh">
+        <router-link to="/medialist/2" class="nav-box" :style="bgImgs.zsdh">
           <div>
             <img src="@/assets/images/zs.png" alt class="nav-icon-zsdh">
             <span>钻石大会</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.csh">
+        <router-link to="/medialist/4" class="nav-box" :style="bgImgs.csh">
           <div>
             <img src="@/assets/images/chishan.png" alt class="nav-icon-csh">
             <span>慈善会</span>
@@ -37,14 +37,14 @@
       </div>
     </div>
     <div class="page-nav-down">
-      <router-link to="/medialist" class="nav-down-left" :style="bgImgs.xbczc">
+      <router-link to="/medialist/2" class="nav-down-left" :style="bgImgs.xbczc">
         <div>
           <img src="@/assets/images/xbczc.png" alt>
           <span class="ell">小白菜便利店众筹</span>
         </div>
       </router-link>
 
-      <router-link to class="nav-down-right" :style="bgImgs.fjsj">
+      <router-link to="/medialist/3" class="nav-down-right" :style="bgImgs.fjsj">
         <div>
           <img src="@/assets/images/fjsj.png" alt>
           <span class="ell">附近商家</span>
@@ -53,25 +53,25 @@
     </div>
     <div class="page-nav-up">
       <div class="page-nav-left">
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.gdzm">
+        <router-link to="/medialist/1" class="nav-box" :style="bgImgs.gdzm">
           <div>
             <img src="@/assets/images/gdzm.png" alt class="nav-icon-gdzm">
             <span>股东招募</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.bdxf">
+        <router-link to="/medialist/6" class="nav-box" :style="bgImgs.bdxf">
           <div>
             <img src="@/assets/images/bdxf.png" alt class="nav-icon-bdxf">
             <span>保本托底消费</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.szgl">
+        <router-link to="/medialist/7" class="nav-box" :style="bgImgs.szgl">
           <div>
             <img src="@/assets/images/szgl.png" alt class="nav-icon-szgl">
             <span>市值管理</span>
           </div>
         </router-link>
-        <router-link to="/medialist" class="nav-box" :style="bgImgs.vrt">
+        <router-link to="/medialist/8" class="nav-box" :style="bgImgs.vrt">
           <div>
             <img src="@/assets/images/zhongchou.png" alt class="nav-icon-vrt">
             <span>VRT交易</span>

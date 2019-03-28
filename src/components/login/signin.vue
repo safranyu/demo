@@ -31,10 +31,10 @@
     </van-field>
     <div class="verifyImg">
       <van-field v-model="verify" placeholder="请输入右侧验证码" maxlength="4" />
-      <img :src="verifyImg" alt="">
+      <img :src="verifyImg" alt="" @click="getSigninImg">
     </div>
     <div class="btnSig">
-      <van-button round size="normal">注册</van-button>
+      <van-button round size="normal" @click="setVerify">注册</van-button>
     </div>
     <van-popup v-model="show" overlay-class="sigOverlay">
       <div class="sigPopup">
@@ -73,6 +73,8 @@ export default {
         return this.tip = "请输入手机号码"
       }else if(!reg.test(this.phone)){
         return this.tip = "手机格式不正确"
+      } else if (this.verify == null) {
+        return this.tip = "请填写验证码!"
       }else{
         this.time=60;
         this.disabled=true;
@@ -107,8 +109,13 @@ export default {
     async setNote() {
       let but = this.$refs.button
       console.log('到我了',this.phone,but)
-      this.tip = this.checkPhone(this.phone)
       console.log('888')
+      // let data = new FormData()
+      //   data.append("smsTplno","zt_zhuce")
+      //   data.append("phone", this.phone)
+      //   data.append("country_code",this.defaultArer.tel_code)
+      //   data.append("verify",this.verify)
+      //   data.append("code", Math.ceil(Math.random() * 10))
       try {
         let data = {
           smsTplno: 'zt_zhuce',
@@ -117,11 +124,35 @@ export default {
           verify: this.verify,
           code: Math.ceil(Math.random() * 10)
         }
-        // let res = await this.$api.matches.setNote(data)
-        // console.log('sdasdasd',res)
+        let params = {}
+        let header = {"Content-Type": "application/x-www-form-urlencoded"}
+        console.log('sdasdasd',data)
+        let res = await this.$api.matches.setNote(params,header,data)
+        if (res.status === 0) {
+          this.tip = res.info
+        }
+        console.log('res',res)
         // if (res.code === 200) {
 
         // }
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async setVerify() {
+      try {
+        let data = {
+          code: this.verify,
+          mobile: this.phone,
+          country_code: this.defaultArer.tel_code,
+          smsTplno: 'zt_zhuce',
+          country: '中国',
+          language: 'zh-cn'
+        }
+        let params ={}
+        let header = {}
+        let res = await this.$api.matches.setVerify(params, header, data)
+        console.log('注册=',res)
       } catch(err) {
         console.log(err)
       }
@@ -137,11 +168,6 @@ export default {
       let arrt = this.arerCode
       this.defaultArer =  arrt[index]
       this.show = !this.show
-    },
-    checkPhone(phone){ 
-      if(!(/^1[345789]\d{9}$/.test(phone)) || this.phone == null){ 
-        return "手机号码有误，请重填"; 
-      } 
     }
   },
   mounted() {

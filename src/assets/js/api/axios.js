@@ -27,8 +27,8 @@ service.interceptors.request.use(
     if (config.method === 'post' || config.method === 'put') {
       // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
       // config.data = JSON.stringify(config.data) //这是转json模式
-      config.data = qs.stringify(config.data) //转换为表单模式
       config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      config.data = qs.stringify(config.data) //转换为表单模式
     }
     if(localStorage.getItem('token')) { //在请求头加上token
       config.headers.Authorization = `token ${localStorage.getItem('token')}`
