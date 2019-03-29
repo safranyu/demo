@@ -14,7 +14,9 @@ import {
   Field,
   CellGroup,
   Cell,
-  Popup
+  Popup,
+  List,
+  Card
 } from 'vant'
 Vue.use(Tabbar)
   .use(TabbarItem)
@@ -29,3 +31,5 @@ Vue.use(Tabbar)
   .use(CellGroup)
   .use(Cell)
   .use(Popup)
+  .use(List)
+  .use(Card)

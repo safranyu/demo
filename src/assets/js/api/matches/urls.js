@@ -17,5 +17,9 @@ export default {
   // 发送短信
   setNote: baseUrl + '/BwwdMoblie.php/Tools/send_msg.html',
   //注册手机验证码验证
-  setVerify: baseUrl + '/BwwdMoblie.php/index/checkVerificationCode.html'
+  setVerify: baseUrl + '/BwwdMoblie.php/index/checkVerificationCode.html',
+  // 文章列表
+  getMediaList: baseUrl + '/BwwdMoblie.php/Recognize/mediaList.html',
+  // 文章详情
+  getArticleInfo: baseUrl + '/BwwdMoblie.php/Recognize/article.html'
 }

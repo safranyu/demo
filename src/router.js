@@ -38,10 +38,20 @@ export default new Router({
       component: () => import("./views/my.vue")
     },
     {
+      path: '/my/buyRecord',
+      name: 'buyRecord',
+      meta: {
+        title: '购买详情',
+        active: 2,
+        requireAuth: true // 当前路由需要校验，不需要就不用写
+      },
+      component: () => import("./components/my/buyRecord.vue")
+    },
+    {
       path: '/crowd/goodsinfo/:id',
       name: 'goodsinfo',
       meta: {
-        title: '文章详情',
+        title: '商品详情',
         requireAuth: false // 当前路由需要校验，不需要就不用写
       },
       component: () => import("./components/details/details.vue")
@@ -54,6 +64,15 @@ export default new Router({
         navShow: false
       },
       component: () => import("./views/medialist.vue")
+    },
+    {
+      path: '/article/:id',
+      name: 'article',
+      meta: {
+        title: '文章详情',
+        navShow: false
+      },
+      component: () => import("./components/details/article.vue")
     },
     {
       path: '/login',

@@ -1,7 +1,7 @@
 import matches from './matches'
-// import user from './user'
+import Mock from './mock'
 
 export default {
   matches,
-  // user
+  Mock
 }

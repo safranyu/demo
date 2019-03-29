@@ -31,5 +31,11 @@ export default {
   },
   setVerify(params, header, data) {
     return api.post(urls.setVerify, params, header, data)
+  },
+  getMediaList(params) {
+    return api.get(urls.getMediaList, params, header)
+  },
+  getArticleInfo(params) {
+    return api.get(urls.getArticleInfo, params, header)
   }
 }

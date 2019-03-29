@@ -2,19 +2,19 @@
   <div class="page-nav clearfix">
     <div class="page-nav-up">
       <div class="page-nav-left">
-        <router-link to="/medialist/9" class="nav-box" :style="bgImgs.js">
+        <router-link to="/medialist/1" class="nav-box" :style="bgImgs.js">
           <div>
             <img src="@/assets/images/js.png" alt class="nav-icon-js">
             <span>竞赛</span>
           </div>
         </router-link>
-        <router-link to="/medialist/1" class="nav-box" :style="bgImgs.sxy">
+        <router-link to="/medialist/2" class="nav-box" :style="bgImgs.sxy">
           <div>
             <img src="@/assets/images/sxy.png" alt class="nav-icon-sxy">
             <span>商学院</span>
           </div>
         </router-link>
-        <router-link to="/medialist/2" class="nav-box" :style="bgImgs.zsdh">
+        <router-link to="/medialist/3" class="nav-box" :style="bgImgs.zsdh">
           <div>
             <img src="@/assets/images/zs.png" alt class="nav-icon-zsdh">
             <span>钻石大会</span>
