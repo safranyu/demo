@@ -22,11 +22,11 @@
     <section id="myOrder">
       <div class="myOrder-head flex">
         <div class="myOrder-head-title">订单管理</div>
-        <router-link :to="{ name: '', params: { buyId : 0 } }" class="myOrder-head-all">全部订单>></router-link>
+        <router-link :to="{ name: 'buyRecord', params: { buyId : 0 } }" class="myOrder-head-all">全部订单>></router-link>
       </div>
       <ul class="myOrderBox flex">
         <li class="myOrder-obligation">
-          <router-link to="/my/buyRecord">
+          <router-link :to="{ name: 'buyRecord', params: { buyId : 1 } }">
             <img src="@/assets/images/dfk.png" alt>
             <span>待支付</span>
           </router-link>
@@ -35,7 +35,7 @@
           </div>
         </li>
         <li class="myOrder-send">
-          <router-link to="/my/buyRecord">
+          <router-link :to="{ name: 'buyRecord', params: { buyId : 2 } }">
             <img src="@/assets/images/dfh.png" alt>
             <span>待审核</span>
           </router-link>
@@ -44,7 +44,7 @@
           </div>
         </li>
         <li class="myOrder-take">
-          <router-link to="/my/buyRecord">
+          <router-link :to="{ name: 'buyRecord', params: { buyId : 3 } }">
             <img src="@/assets/images/dsh.png" alt>
             <span>已完成</span>
           </router-link>
@@ -53,7 +53,7 @@
           </div>
         </li>
         <li class="myOrder-done">
-          <router-link to="/my/buyRecord">
+          <router-link :to="{ name: 'buyRecord', params: { buyId : 4 } }">
             <img src="@/assets/images/ycg.png" alt>
             <span>已取消</span>
           </router-link>

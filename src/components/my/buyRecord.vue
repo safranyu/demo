@@ -1,6 +1,7 @@
 <template>
   <van-tabs 
-    v-model="active" 
+    v-model="active"
+    @change="getThisIndex"
     swipeable 
     sticky 
     :swipe-threshold="tabNumber" 
@@ -15,20 +16,16 @@
         @load="onLoad"
       >
         <van-card
-          num="2"
-          tag="标签"
-          price="2.00"
-          desc="描述信息"  
-          title="商品标题"
-          :thumb="imageURL"
-          origin-price="10.00"
+          v-for="item in (active == 0 ? goodsList: active == 1 ? dzf : active == 2 ? dsh : active == 3 ? ywc : yqx)"
+          :key="item.order_id"
+          :num="item.goods_number"
+          :title="item.goods_name"
+          :thumb="item.images"
         >
           <div slot="footer">
-            <van-button size="mini">按钮</van-button>
-            <van-button size="mini">按钮</van-button>
+            <van-button size="small" round>查看详情</van-button>
           </div>
         </van-card>
-        <van-cell v-for="item in list" :key="item" :title="item"/>
       </van-list>
     </van-tab>
   </van-tabs>
@@ -45,7 +42,12 @@ export default {
       finished: false,
       tabTitle: ["全部", "待支付", "待审核", "已完成", "已取消"],
       tabNumber: 5,
-      imageURL:''
+      imageURL:'',
+      goodsList:[],
+      dzf:[],
+      dsh:[],
+      ywc:[],
+      yqx:[]
       // buyId: this.$router.params.buyId
     }
   },
@@ -65,24 +67,70 @@ export default {
         }
       }, 500);
     },
-    async getBuyRecord() {
+    async getBuyRecord(t) {
       try {
         let params = {
-          t: 0,
+          t: t,
           p: 1
         }
         let res = await this.$api.Mock.getBuyRecord(params)
         console.log(res)
+        if (res.code === 200) {
+          switch(t) {
+            case 0:
+              this.goodsList = res.data
+              break;
+            case 1:
+              this.dzf = res.data
+              break;
+            case 2:
+              this.dsh = res.data
+              break;
+            case 3:
+              this.ywc = res.data
+              break;
+            case 4:
+              this.yqx = res.data
+              break;
+            default:
+              console.log('type有误')
+          }
+        }
       } catch(err) {
         console.log(err)
       }
+    },
+    getThisIndex(index,title){
+      this.getBuyRecord(index)
+      console.log('当前点击的',index,title)
     }
   },
   mounted(){
-    console.log("1",this.$router)
+    console.log("1",this.$route.params) //路由传过来的参数
   },
   created() {
-   this.getBuyRecord()   
-  }
+    let idx = this.$route.params.buyId == null ? 0 : this.$route.params.buyId
+    this.active = idx
+    this.getBuyRecord(idx)
+   
+  },
+  beforeCreate: function() { // 单独更改页面的背景
+    document.body.style.backgroundColor = '#F5F5F5'
+  },
+  beforeDestroy: function() { // 删除添加的背景
+    document.body.removeAttribute("style","backgroundColor")
+  },
 }
 </script>
+
+<style lang="less">
+.van-card{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10Px;
+}
+.van-card{
+  background-color: #fff;
+}
+</style>
